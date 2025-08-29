@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node tests/basic-test.js",
+    "demo": "node scripts/driver-demo.js",
     "appium": "appium",
     "driver:list": "appium driver list",
     "driver:install": "appium driver install",

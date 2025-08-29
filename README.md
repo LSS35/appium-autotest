@@ -2,6 +2,23 @@
 
 This project demonstrates Appium 2 setup with uiautomator2 driver for Android automation testing.
 
+## 🚀 Quick Start
+
+1. **Demo the setup:**
+```bash
+npm run demo
+```
+
+2. **Start Appium server:**
+```bash
+npm run start-server
+```
+
+3. **Run basic test** (in another terminal):
+```bash
+npm test
+```
+
 ## 🚀 Features
 
 - ✅ Appium 2.x setup
@@ -120,6 +137,7 @@ This test:
 
 ## 📚 Available Scripts
 
+- `npm run demo` - Run driver management demonstration
 - `npm run appium` - Run Appium CLI commands
 - `npm run driver:list` - List all available drivers
 - `npm run driver:install` - Install new drivers
