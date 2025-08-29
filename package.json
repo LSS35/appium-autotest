@@ -1,0 +1,37 @@
+{
+  "name": "appium-autotest",
+  "version": "1.0.0",
+  "description": "Mobile automation testing setup with Appium",
+  "main": "index.js",
+  "scripts": {
+    "verify-setup": "node scripts/verify-setup.js",
+    "doctor": "npx appium-doctor",
+    "start-appium": "appium",
+    "start-emulator": "emulator -list-avds && echo 'Use: emulator -avd <AVD_NAME>'",
+    "avd": "./scripts/manage-avd.sh",
+    "avd:list": "./scripts/manage-avd.sh list",
+    "avd:create": "./scripts/manage-avd.sh create",
+    "avd:start": "./scripts/manage-avd.sh start",
+    "avd:stop": "./scripts/manage-avd.sh stop",
+    "test": "echo \"No tests specified yet\" && exit 0",
+    "test:sample": "node tests/sample-test.js"
+  },
+  "keywords": [
+    "appium",
+    "mobile",
+    "automation",
+    "testing",
+    "android",
+    "ios"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "appium": "^2.0.0",
+    "appium-doctor": "^1.16.2"
+  },
+  "dependencies": {
+    "appium-inspector": "^2024.1.1",
+    "webdriverio": "^8.0.0"
+  }
+}
