@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<!-- 
+  Login Screen XML Hierarchy Example
+  This demonstrates a typical mobile app login screen with stable locators
+  Screenshot placeholder: examples/screenshots/login_screen.png
+-->
+<hierarchy rotation="0">
+  <node index="0" text="" resource-id="" class="android.widget.FrameLayout" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,2220]">
+    
+    <!-- Main Activity Container -->
+    <node index="0" text="" resource-id="android:id/content" class="android.widget.FrameLayout" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,66][1080,2220]">
+      
+      <!-- Login Form Container -->
+      <node index="0" text="" resource-id="com.example.app:id/login_container" class="android.widget.LinearLayout" package="com.example.app" content-desc="Login Form" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[40,300][1040,1400]">
+        
+        <!-- App Logo -->
+        <node index="0" text="" resource-id="com.example.app:id/app_logo" class="android.widget.ImageView" package="com.example.app" content-desc="App Logo" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[440,320][640,420]" />
+        
+        <!-- Title Text -->
+        <node index="1" text="Welcome Back" resource-id="com.example.app:id/login_title" class="android.widget.TextView" package="com.example.app" content-desc="Login Title" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[40,450][1040,500]" />
+        
+        <!-- Username Input Field -->
+        <node index="2" text="" resource-id="com.example.app:id/username_field" class="android.widget.EditText" package="com.example.app" content-desc="Username Input" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="true" password="false" selected="false" bounds="[80,550][1000,630]">
+          <node index="0" text="Enter username or email" resource-id="" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[100,575][400,605]" />
+        </node>
+        
+        <!-- Password Input Field -->
+        <node index="3" text="" resource-id="com.example.app:id/password_field" class="android.widget.EditText" package="com.example.app" content-desc="Password Input" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="true" password="true" selected="false" bounds="[80,670][1000,750]">
+          <node index="0" text="Enter password" resource-id="" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[100,695][300,725]" />
+        </node>
+        
+        <!-- Show/Hide Password Toggle -->
+        <node index="4" text="" resource-id="com.example.app:id/password_toggle" class="android.widget.ImageButton" package="com.example.app" content-desc="Show Password" checkable="true" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[920,680][980,740]" />
+        
+        <!-- Remember Me Checkbox -->
+        <node index="5" text="Remember me" resource-id="com.example.app:id/remember_checkbox" class="android.widget.CheckBox" package="com.example.app" content-desc="Remember Login" checkable="true" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,790][300,830]" />
+        
+        <!-- Login Button -->
+        <node index="6" text="Login" resource-id="com.example.app:id/login_button" class="android.widget.Button" package="com.example.app" content-desc="Login Button" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,870][1000,950]" />
+        
+        <!-- Forgot Password Link -->
+        <node index="7" text="Forgot Password?" resource-id="com.example.app:id/forgot_password_link" class="android.widget.TextView" package="com.example.app" content-desc="Forgot Password Link" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,990][400,1030]" />
+        
+        <!-- Social Login Section -->
+        <node index="8" text="" resource-id="com.example.app:id/social_login_container" class="android.widget.LinearLayout" package="com.example.app" content-desc="Social Login Options" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,1070][1000,1200]">
+          
+          <!-- Divider Text -->
+          <node index="0" text="Or continue with" resource-id="com.example.app:id/divider_text" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,1080][1000,1110]" />
+          
+          <!-- Google Login Button -->
+          <node index="1" text="Continue with Google" resource-id="com.example.app:id/google_login_button" class="android.widget.Button" package="com.example.app" content-desc="Google Login Button" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,1130][500,1190]" />
+          
+          <!-- Facebook Login Button -->
+          <node index="2" text="Continue with Facebook" resource-id="com.example.app:id/facebook_login_button" class="android.widget.Button" package="com.example.app" content-desc="Facebook Login Button" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[580,1130][1000,1190]" />
+        </node>
+        
+        <!-- Sign Up Link -->
+        <node index="9" text="Don't have an account? Sign up" resource-id="com.example.app:id/signup_link" class="android.widget.TextView" package="com.example.app" content-desc="Sign Up Link" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,1240][600,1280]" />
+      </node>
+    </node>
+    
+    <!-- Bottom Navigation (if present) -->
+    <node index="1" text="" resource-id="com.example.app:id/bottom_navigation" class="android.widget.FrameLayout" package="com.example.app" content-desc="Bottom Navigation" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,2100][1080,2220]" />
+  </node>
+</hierarchy>
+
+<!-- 
+STABLE LOCATORS IDENTIFIED:
+
+Primary (Resource ID):
+- com.example.app:id/username_field      (Username input)
+- com.example.app:id/password_field      (Password input)
+- com.example.app:id/login_button        (Login button)
+- com.example.app:id/forgot_password_link (Forgot password)
+- com.example.app:id/google_login_button (Google login)
+- com.example.app:id/facebook_login_button (Facebook login)
+- com.example.app:id/signup_link         (Sign up link)
+- com.example.app:id/remember_checkbox   (Remember me)
+- com.example.app:id/password_toggle     (Show/hide password)
+
+Secondary (Accessibility ID):
+- "Username Input"        (Username field)
+- "Password Input"        (Password field)
+- "Login Button"          (Login button)
+- "Forgot Password Link"  (Forgot password)
+- "Google Login Button"   (Google login)
+- "Facebook Login Button" (Facebook login)
+- "Sign Up Link"          (Sign up link)
+- "Remember Login"        (Remember checkbox)
+- "Show Password"         (Password toggle)
+-->

@@ -1,0 +1,39 @@
+# Temporary files
+/tmp/
+*.tmp
+*.temp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Build artifacts
+build/
+dist/
+target/
+
+# Dependencies
+node_modules/
+*.jar
+*.apk
+
+# Test reports
+test-results/
+allure-results/
+screenshots/test-*
+
+# Appium logs
+appium.log
+appium-*.log
+
+# Device specific files
+*.hprof
