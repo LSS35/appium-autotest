@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<!-- 
+  Dashboard/Main Screen XML Hierarchy Example
+  This demonstrates a typical mobile app main screen with navigation and content
+  Screenshot placeholder: examples/screenshots/dashboard_screen.png
+-->
+<hierarchy rotation="0">
+  <node index="0" text="" resource-id="" class="android.widget.FrameLayout" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1080,2220]">
+    
+    <!-- Main Activity Container -->
+    <node index="0" text="" resource-id="android:id/content" class="android.widget.FrameLayout" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,66][1080,2220]">
+      
+      <!-- Top App Bar -->
+      <node index="0" text="" resource-id="com.example.app:id/app_bar" class="android.widget.LinearLayout" package="com.example.app" content-desc="Top App Bar" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,66][1080,200]">
+        
+        <!-- Menu/Hamburger Button -->
+        <node index="0" text="" resource-id="com.example.app:id/menu_button" class="android.widget.ImageButton" package="com.example.app" content-desc="Menu" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[20,90][80,150]" />
+        
+        <!-- App Title -->
+        <node index="1" text="Dashboard" resource-id="com.example.app:id/app_title" class="android.widget.TextView" package="com.example.app" content-desc="Dashboard Title" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[100,90][600,150]" />
+        
+        <!-- Search Button -->
+        <node index="2" text="" resource-id="com.example.app:id/search_button" class="android.widget.ImageButton" package="com.example.app" content-desc="Search" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[920,90][980,150]" />
+        
+        <!-- Notifications Button -->
+        <node index="3" text="" resource-id="com.example.app:id/notifications_button" class="android.widget.ImageButton" package="com.example.app" content-desc="Notifications" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[1000,90][1060,150]" />
+        
+        <!-- Notification Badge -->
+        <node index="4" text="3" resource-id="com.example.app:id/notification_badge" class="android.widget.TextView" package="com.example.app" content-desc="3 notifications" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[1035,85][1055,105]" />
+      </node>
+      
+      <!-- Search Bar (Expandable) -->
+      <node index="1" text="" resource-id="com.example.app:id/search_container" class="android.widget.LinearLayout" package="com.example.app" content-desc="Search Container" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="true" long-clickable="false" password="false" selected="false" bounds="[20,210][1060,280]">
+        
+        <!-- Search Input Field -->
+        <node index="0" text="" resource-id="com.example.app:id/search_input" class="android.widget.EditText" package="com.example.app" content-desc="Search Input" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="true" password="false" selected="false" bounds="[40,225][980,265]">
+          <node index="0" text="Search for anything..." resource-id="" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[60,235][300,255]" />
+        </node>
+        
+        <!-- Voice Search Button -->
+        <node index="1" text="" resource-id="com.example.app:id/voice_search_button" class="android.widget.ImageButton" package="com.example.app" content-desc="Voice Search" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[990,230][1040,270]" />
+      </node>
+      
+      <!-- Main Content Area -->
+      <node index="2" text="" resource-id="com.example.app:id/main_content" class="android.widget.ScrollView" package="com.example.app" content-desc="Main Content" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" scrollable="true" long-clickable="false" password="false" selected="false" bounds="[0,290][1080,1900]">
+        
+        <!-- Quick Actions Section -->
+        <node index="0" text="" resource-id="com.example.app:id/quick_actions_section" class="android.widget.LinearLayout" package="com.example.app" content-desc="Quick Actions" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[20,310][1060,480]">
+          
+          <!-- Section Title -->
+          <node index="0" text="Quick Actions" resource-id="com.example.app:id/quick_actions_title" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[40,320][400,350]" />
+          
+          <!-- Quick Action Buttons Grid -->
+          <node index="1" text="" resource-id="com.example.app:id/quick_actions_grid" class="android.widget.GridLayout" package="com.example.app" content-desc="Quick Actions Grid" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[40,360][1040,460]">
+            
+            <!-- Action: Add New -->
+            <node index="0" text="Add New" resource-id="com.example.app:id/action_add_new" class="android.widget.Button" package="com.example.app" content-desc="Add New Item" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[60,370][290,440]" />
+            
+            <!-- Action: Scan QR -->
+            <node index="1" text="Scan QR" resource-id="com.example.app:id/action_scan_qr" class="android.widget.Button" package="com.example.app" content-desc="Scan QR Code" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[310,370][540,440]" />
+            
+            <!-- Action: Share -->
+            <node index="2" text="Share" resource-id="com.example.app:id/action_share" class="android.widget.Button" package="com.example.app" content-desc="Share Content" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[560,370][790,440]" />
+            
+            <!-- Action: Settings -->
+            <node index="3" text="Settings" resource-id="com.example.app:id/action_settings" class="android.widget.Button" package="com.example.app" content-desc="Open Settings" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[810,370][1020,440]" />
+          </node>
+        </node>
+        
+        <!-- Recent Items Section -->
+        <node index="1" text="" resource-id="com.example.app:id/recent_items_section" class="android.widget.LinearLayout" package="com.example.app" content-desc="Recent Items" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[20,500][1060,1200]">
+          
+          <!-- Section Header -->
+          <node index="0" text="" resource-id="com.example.app:id/recent_items_header" class="android.widget.LinearLayout" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[40,510][1040,560]">
+            
+            <!-- Section Title -->
+            <node index="0" text="Recent Items" resource-id="com.example.app:id/recent_items_title" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[40,520][300,550]" />
+            
+            <!-- View All Link -->
+            <node index="1" text="View All" resource-id="com.example.app:id/view_all_recent" class="android.widget.TextView" package="com.example.app" content-desc="View All Recent Items" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[900,520][1040,550]" />
+          </node>
+          
+          <!-- Recent Items List -->
+          <node index="1" text="" resource-id="com.example.app:id/recent_items_list" class="android.support.v7.widget.RecyclerView" package="com.example.app" content-desc="Recent Items List" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" scrollable="true" long-clickable="false" password="false" selected="false" bounds="[40,570][1040,1180]">
+            
+            <!-- Recent Item 1 -->
+            <node index="0" text="" resource-id="com.example.app:id/recent_item_1" class="android.widget.LinearLayout" package="com.example.app" content-desc="Recent Item: Project Alpha" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="true" password="false" selected="false" bounds="[60,590][1020,720]">
+              <node index="0" text="Project Alpha" resource-id="com.example.app:id/item_title" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,610][400,640]" />
+              <node index="1" text="Updated 2 hours ago" resource-id="com.example.app:id/item_subtitle" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,650][400,680]" />
+              <node index="2" text="" resource-id="com.example.app:id/item_menu" class="android.widget.ImageButton" package="com.example.app" content-desc="Item Menu" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[950,610][1000,680]" />
+            </node>
+            
+            <!-- Recent Item 2 -->
+            <node index="1" text="" resource-id="com.example.app:id/recent_item_2" class="android.widget.LinearLayout" package="com.example.app" content-desc="Recent Item: Task Manager" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="true" password="false" selected="false" bounds="[60,740][1020,870]">
+              <node index="0" text="Task Manager" resource-id="com.example.app:id/item_title" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,760][400,790]" />
+              <node index="1" text="Updated yesterday" resource-id="com.example.app:id/item_subtitle" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,800][400,830]" />
+              <node index="2" text="" resource-id="com.example.app:id/item_menu" class="android.widget.ImageButton" package="com.example.app" content-desc="Item Menu" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[950,760][1000,830]" />
+            </node>
+          </node>
+        </node>
+        
+        <!-- Stats/Analytics Section -->
+        <node index="2" text="" resource-id="com.example.app:id/stats_section" class="android.widget.LinearLayout" package="com.example.app" content-desc="Statistics" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[20,1220][1060,1500]">
+          
+          <!-- Section Title -->
+          <node index="0" text="This Week's Activity" resource-id="com.example.app:id/stats_title" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[40,1240][500,1270]" />
+          
+          <!-- Stats Cards -->
+          <node index="1" text="" resource-id="com.example.app:id/stats_cards" class="android.widget.LinearLayout" package="com.example.app" content-desc="Statistics Cards" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[40,1290][1040,1480]">
+            
+            <!-- Tasks Completed Card -->
+            <node index="0" text="" resource-id="com.example.app:id/stat_tasks_completed" class="android.widget.LinearLayout" package="com.example.app" content-desc="Tasks Completed: 15" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[60,1310][340,1460]">
+              <node index="0" text="15" resource-id="com.example.app:id/stat_value" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,1330][320,1380]" />
+              <node index="1" text="Tasks Completed" resource-id="com.example.app:id/stat_label" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[80,1390][320,1420]" />
+            </node>
+            
+            <!-- Hours Logged Card -->
+            <node index="1" text="" resource-id="com.example.app:id/stat_hours_logged" class="android.widget.LinearLayout" package="com.example.app" content-desc="Hours Logged: 32" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[360,1310][720,1460]">
+              <node index="0" text="32" resource-id="com.example.app:id/stat_value" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[380,1330][700,1380]" />
+              <node index="1" text="Hours Logged" resource-id="com.example.app:id/stat_label" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[380,1390][700,1420]" />
+            </node>
+            
+            <!-- Projects Active Card -->
+            <node index="2" text="" resource-id="com.example.app:id/stat_projects_active" class="android.widget.LinearLayout" package="com.example.app" content-desc="Active Projects: 5" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[740,1310][1020,1460]">
+              <node index="0" text="5" resource-id="com.example.app:id/stat_value" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[760,1330][1000,1380]" />
+              <node index="1" text="Active Projects" resource-id="com.example.app:id/stat_label" class="android.widget.TextView" package="com.example.app" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[760,1390][1000,1420]" />
+            </node>
+          </node>
+        </node>
+      </node>
+      
+      <!-- Floating Action Button -->
+      <node index="3" text="" resource-id="com.example.app:id/fab_add" class="android.support.design.widget.FloatingActionButton" package="com.example.app" content-desc="Add New Item" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[980,1800][1060,1880]" />
+      
+      <!-- Bottom Navigation -->
+      <node index="4" text="" resource-id="com.example.app:id/bottom_navigation" class="android.support.design.widget.BottomNavigationView" package="com.example.app" content-desc="Bottom Navigation" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1900][1080,2220]">
+        
+        <!-- Home Tab -->
+        <node index="0" text="Home" resource-id="com.example.app:id/nav_home" class="android.widget.FrameLayout" package="com.example.app" content-desc="Home Tab" checkable="true" checked="true" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="true" bounds="[0,1920][216,2200]" />
+        
+        <!-- Search Tab -->
+        <node index="1" text="Search" resource-id="com.example.app:id/nav_search" class="android.widget.FrameLayout" package="com.example.app" content-desc="Search Tab" checkable="true" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[216,1920][432,2200]" />
+        
+        <!-- Favorites Tab -->
+        <node index="2" text="Favorites" resource-id="com.example.app:id/nav_favorites" class="android.widget.FrameLayout" package="com.example.app" content-desc="Favorites Tab" checkable="true" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[432,1920][648,2200]" />
+        
+        <!-- Profile Tab -->
+        <node index="3" text="Profile" resource-id="com.example.app:id/nav_profile" class="android.widget.FrameLayout" package="com.example.app" content-desc="Profile Tab" checkable="true" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[648,1920][864,2200]" />
+        
+        <!-- Settings Tab -->
+        <node index="4" text="Settings" resource-id="com.example.app:id/nav_settings" class="android.widget.FrameLayout" package="com.example.app" content-desc="Settings Tab" checkable="true" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[864,1920][1080,2200]" />
+      </node>
+    </node>
+    
+    <!-- Navigation Drawer (Hidden by default) -->
+    <node index="1" text="" resource-id="com.example.app:id/navigation_drawer" class="android.support.design.widget.NavigationView" package="com.example.app" content-desc="Navigation Drawer" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="true" long-clickable="false" password="false" selected="false" bounds="[-864,66][216,2220]" />
+  </node>
+</hierarchy>
+
+<!-- 
+STABLE LOCATORS IDENTIFIED:
+
+Primary Navigation (Resource ID):
+- com.example.app:id/menu_button         (Hamburger menu)
+- com.example.app:id/search_input        (Search input field)
+- com.example.app:id/notifications_button (Notifications button)
+- com.example.app:id/fab_add            (Floating action button)
+
+Bottom Navigation Tabs:
+- com.example.app:id/nav_home           (Home tab)
+- com.example.app:id/nav_search         (Search tab)
+- com.example.app:id/nav_favorites      (Favorites tab)
+- com.example.app:id/nav_profile        (Profile tab)
+- com.example.app:id/nav_settings       (Settings tab)
+
+Quick Actions:
+- com.example.app:id/action_add_new     (Add new button)
+- com.example.app:id/action_scan_qr     (Scan QR button)
+- com.example.app:id/action_share       (Share button)
+- com.example.app:id/action_settings    (Settings button)
+
+Content Areas:
+- com.example.app:id/recent_items_list  (Recent items RecyclerView)
+- com.example.app:id/view_all_recent    (View all link)
+- com.example.app:id/stat_tasks_completed (Tasks stat card)
+- com.example.app:id/stat_hours_logged  (Hours stat card)
+- com.example.app:id/stat_projects_active (Projects stat card)
+
+Secondary (Accessibility ID):
+- "Menu"                    (Hamburger menu)
+- "Search Input"            (Search field)
+- "Notifications"           (Notifications button)
+- "Add New Item"            (FAB and add button)
+- "Home Tab"                (Home navigation)
+- "Search Tab"              (Search navigation)
+- "Profile Tab"             (Profile navigation)
+- "Scan QR Code"            (QR scanner)
+- "Share Content"           (Share action)
+- "Open Settings"           (Settings action)
+-->
