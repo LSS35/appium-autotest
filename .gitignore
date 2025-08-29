@@ -3,3 +3,16 @@
 
 # Ignore Gradle build output directory
 build
+
+# Ignore Allure results (test artifacts)
+allure-results/
+**/allure-results/
+
+# Ignore IDE files
+.idea/
+.vscode/
+*.iml
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
