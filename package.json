@@ -31,7 +31,7 @@
     "appium-doctor": "^1.16.2"
   },
   "dependencies": {
-    "appium-inspector": "^2024.1.1",
+    "appium-inspector": "^2023.2.1",
     "webdriverio": "^8.0.0"
   }
 }

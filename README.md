@@ -34,6 +34,12 @@ Prepare a mobile automation workspace with all necessary tools and dependencies.
 .\scripts\setup-windows.ps1
 ```
 
+### Install Project Dependencies
+After running the setup script, install the project dependencies:
+```bash
+npm install
+```
+
 ### Verification
 Run the verification script to ensure all tools are properly installed:
 ```bash
@@ -138,6 +144,11 @@ export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 ```
 
 ## 🧪 Testing Your Setup
+
+**Important:** First install project dependencies if you haven't already:
+```bash
+npm install
+```
 
 ### 1. Run Appium Doctor
 ```bash
