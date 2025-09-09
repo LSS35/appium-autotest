@@ -28,7 +28,8 @@
   "license": "MIT",
   "devDependencies": {
     "appium": "^2.0.0",
-    "appium-doctor": "^1.16.2"
+    "appium-doctor": "^1.16.2",
+    "appium-uiautomator2-driver": "^4.2.9"
   },
   "dependencies": {
     "appium-inspector": "^2023.2.1",
