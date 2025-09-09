@@ -1,59 +1,59 @@
-// Sample Appium test to verify the setup is working
-// This is a basic test that launches the Android Settings app
+// Sample Appium test to verify the setup is working (Appium 2.x + WebdriverIO v8)
 
 const { remote } = require('webdriverio');
 
-// Test configuration
+// ✅ Capabilities updated for Appium 2.x
 const capabilities = {
   platformName: 'Android',
-  automationName: 'UiAutomator2',
-  deviceName: 'Android Emulator',
-  platformVersion: '13.0', // Adjust based on your emulator
-  appPackage: 'com.android.settings',
-  appActivity: '.Settings',
-  newCommandTimeout: 300,
-  autoGrantPermissions: true
+  'appium:automationName': 'UiAutomator2',
+  'appium:deviceName': 'Android Emulator',
+  'appium:platformVersion': '16.0', // Adjust based on your emulator
+  'appium:appPackage': 'com.android.settings',
+  'appium:appActivity': '.Settings',
+  'appium:newCommandTimeout': 300,
+  'appium:autoGrantPermissions': true
 };
 
+// WebDriverIO options
 const wdOpts = {
+  protocol: 'http', // Added explicitly
   hostname: '127.0.0.1',
   port: 4723,
+  path: '/', // Needed for Appium 2.x if using default server
   logLevel: 'info',
   capabilities
 };
 
 async function runSampleTest() {
   console.log('🚀 Starting Appium sample test...');
-  
+
   let driver;
-  
+
   try {
     // Create Appium session
     console.log('📱 Connecting to Appium server...');
     driver = await remote(wdOpts);
     console.log('✅ Connected to Appium server successfully');
-    
+
     // Wait for the app to load
     console.log('⏳ Waiting for Settings app to load...');
     await driver.pause(3000);
-    
-    // Get app package and activity
+
+    // Get current app package & activity
     const currentPackage = await driver.getCurrentPackage();
     const currentActivity = await driver.getCurrentActivity();
     console.log(`📦 Current package: ${currentPackage}`);
     console.log(`🎯 Current activity: ${currentActivity}`);
-    
-    // Verify we're in the Settings app
+
+    // Validate the app launched
     if (currentPackage === 'com.android.settings') {
       console.log('✅ Settings app launched successfully');
     } else {
-      console.log('⚠️  Unexpected app package');
+      console.warn('⚠️ Unexpected app package detected');
     }
-    
-    // Find and interact with an element
+
+    // Find and click the search button (if exists)
     console.log('🔍 Looking for Settings elements...');
-    
-    // Try to find search button or settings items
     try {
       const searchElement = await driver.$('//android.widget.ImageButton[@content-desc="Search settings"]');
       if (await searchElement.isDisplayed()) {
@@ -62,22 +62,20 @@ async function runSampleTest() {
         console.log('🔍 Clicked search button');
         await driver.pause(1000);
       }
-    } catch (error) {
-      console.log('ℹ️  Search button not found, continuing...');
+    } catch {
+      console.log('ℹ️ Search button not found, skipping...');
     }
-    
-    // Get page source to verify interaction
+
+    // Validate page source contains Settings text
     console.log('📄 Getting page source...');
     const pageSource = await driver.getPageSource();
-    
     if (pageSource.includes('Settings') || pageSource.includes('settings')) {
-      console.log('✅ Page source contains Settings content');
+      console.log('✅ Page source contains expected content');
     } else {
-      console.log('⚠️  Page source verification failed');
+      console.warn('⚠️ Page source verification failed');
     }
-    
+
     console.log('🎉 Sample test completed successfully!');
-    
   } catch (error) {
     console.error('❌ Test failed:', error.message);
     throw error;
@@ -90,7 +88,7 @@ async function runSampleTest() {
   }
 }
 
-// Run the test if this file is executed directly
+// Run test when executed directly
 if (require.main === module) {
   runSampleTest()
     .then(() => {

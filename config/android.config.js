@@ -34,7 +34,7 @@ module.exports = {
   androidCapabilities: {
     platformName: 'Android',
     automationName: 'UiAutomator2',
-    platformVersion: '13.0',
+    platformVersion: '16.0',
     deviceName: 'Android Emulator',
     
     // Performance optimizations

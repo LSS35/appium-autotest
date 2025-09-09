@@ -26,7 +26,7 @@ module.exports = {
     platformName: 'Android',
     automationName: 'UiAutomator2',
     deviceName: 'Android Emulator',
-    platformVersion: '13.0',
+    platformVersion: '16.0',
     
     // App configuration
     appPackage: 'com.android.settings',
