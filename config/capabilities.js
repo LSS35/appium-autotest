@@ -15,7 +15,7 @@ const androidApp = {
   'appium:automationName': 'UiAutomator2',
   'appium:deviceName': 'Android Emulator',
   'appium:platformVersion': '11.0',
-  'appium:app': '/path/to/your/app.apk', // Path to your APK
+  'appium:app': process.env.APP_PATH || './apps/sample-app.apk', // Set APP_PATH env var or place APK in ./apps/
   'appium:appWaitActivity': '*',
   'appium:noReset': false
 };
@@ -35,7 +35,7 @@ const androidRealDevice = {
   platformName: 'Android',
   'appium:automationName': 'UiAutomator2',
   'appium:deviceName': 'Real Device', // Use adb devices to get UDID
-  'appium:udid': 'YOUR_DEVICE_UDID',
+  'appium:udid': process.env.DEVICE_UDID || 'REPLACE_WITH_DEVICE_UDID', // Run 'adb devices' to get your device UDID
   'appium:platformVersion': '12.0',
   'appium:noReset': true
 };

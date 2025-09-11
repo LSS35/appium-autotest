@@ -11,7 +11,7 @@ const capabilities = {
   'appium:noReset': true
 };
 
-const appiumServerUrl = 'http://localhost:4723/wd/hub';
+const appiumServerUrl = process.env.APPIUM_SERVER_URL || 'http://localhost:4723/wd/hub';
 
 async function runBasicTest() {
   console.log('Starting Appium uiautomator2 driver test...');
