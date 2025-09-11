@@ -1,15 +1,15 @@
-# Appium Mobile Automation Test Setup
+# Appium 2 Mobile Automation Test Setup
 
-This repository provides a complete setup guide and scripts for preparing a mobile automation workspace using Appium.
+This project demonstrates Appium 2 setup with uiautomator2 driver for Android automation testing and provides a complete workspace setup guide.
 
 ## 🎯 Goal
-Prepare a mobile automation workspace with all necessary tools and dependencies.
+Prepare a mobile automation workspace with Appium 2 and all necessary tools and dependencies for mobile testing.
 
 ## 📋 Requirements
 - JDK 17
 - Gradle/Maven
 - Android Studio + SDK + AVD
-- Node.js
+- Node.js (v16 or higher)
 - Appium 2
 - Appium Inspector
 
@@ -17,6 +17,7 @@ Prepare a mobile automation workspace with all necessary tools and dependencies.
 - appium-doctor passes all checks
 - Android emulator runs successfully
 - Appium server starts successfully
+- uiautomator2 driver working properly
 
 ## 🚀 Quick Start
 
@@ -40,115 +41,60 @@ After running the setup script, install the project dependencies:
 npm install
 ```
 
-### Verification
-Run the verification script to ensure all tools are properly installed:
+### Demo and Verification
+1. **Demo the setup:**
+```bash
+npm run demo
+```
+
+2. **Verify setup:**
 ```bash
 npm run verify-setup
 ```
 
-## 📖 Manual Installation Guide
-
-### 1. Install JDK 17
-#### macOS:
+3. **Start Appium server:**
 ```bash
-brew install openjdk@17
-echo 'export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home' >> ~/.zshrc
+npm run start-server
 ```
 
-#### Linux:
+4. **Run basic test** (in another terminal):
 ```bash
-sudo apt update
-sudo apt install openjdk-17-jdk
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+npm test
 ```
 
-#### Windows:
-1. Download JDK 17 from [Oracle](https://www.oracle.com/java/technologies/downloads/#java17) or [OpenJDK](https://openjdk.org/projects/jdk/17/)
-2. Install and set JAVA_HOME environment variable
+## 🚀 Features
 
-### 2. Install Gradle
+- ✅ Appium 2.19.0 setup
+- ✅ uiautomator2 driver installation and configuration
+- ✅ Driver management commands
+- ✅ Basic test examples
+- ✅ WebDriverIO integration
+- ✅ Multiple capability configurations
+- ✅ AVD management scripts
+- ✅ Comprehensive verification tools
+
+## 🎯 Driver Management
+
+### List Available Drivers
 ```bash
-# macOS
-brew install gradle
-
-# Linux
-sudo apt install gradle
-
-# Windows (using Chocolatey)
-choco install gradle
+npm run driver:list
 ```
 
-### 3. Install Android Studio and SDK
-1. Download [Android Studio](https://developer.android.com/studio)
-2. Install Android SDK through Android Studio
-3. Set ANDROID_HOME environment variable:
-   - macOS/Linux: `export ANDROID_HOME=$HOME/Library/Android/sdk`
-   - Windows: `set ANDROID_HOME=%USERPROFILE%\AppData\Local\Android\Sdk`
-
-### 4. Install Node.js
+### Install Additional Drivers
 ```bash
-# macOS
-brew install node
+# Install uiautomator2 (already included)
+npm run driver:install uiautomator2
 
-# Linux
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Windows
-# Download from https://nodejs.org/
+# Install xcuitest for iOS
+npm run driver:install xcuitest
 ```
 
-### 5. Install Appium 2
+### Check Installed Drivers
 ```bash
-npm install -g appium@next
-```
-
-### 6. Install Appium Inspector
-```bash
-npm install -g appium-inspector
-```
-
-## 🔧 Configuration
-
-### Android Virtual Device (AVD) Setup
-Use our AVD management script:
-```bash
-# Create default test AVD
-npm run avd:create
-
-# List available AVDs
-npm run avd:list
-
-# Start an AVD
-npm run avd:start
-
-# Stop all emulators
-npm run avd:stop
-```
-
-Or manually through Android Studio:
-1. Open Android Studio
-2. Go to AVD Manager
-3. Create a new virtual device
-4. Choose a device definition (e.g., Pixel 4)
-5. Select a system image (API level 29 or higher recommended)
-6. Configure AVD settings and finish
-
-### Environment Variables
-Ensure the following environment variables are set:
-
-```bash
-export JAVA_HOME=/path/to/jdk17
-export ANDROID_HOME=/path/to/android/sdk
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+npx appium driver list
 ```
 
 ## 🧪 Testing Your Setup
-
-**Important:** First install project dependencies if you haven't already:
-```bash
-npm install
-```
 
 ### 1. Run Appium Doctor
 ```bash
@@ -170,6 +116,60 @@ npm run start-appium
 npm run test:sample
 ```
 
+### 5. Run Basic uiautomator2 Test
+```bash
+npm test
+```
+
+## 📱 Device Setup
+
+### Android Virtual Device (AVD) Setup
+Use our AVD management script:
+```bash
+# Create default test AVD
+npm run avd:create
+
+# List available AVDs
+npm run avd:list
+
+# Start an AVD
+npm run avd:start
+
+# Stop all emulators
+npm run avd:stop
+```
+
+### Real Android Device
+1. Enable Developer Options
+2. Enable USB Debugging
+3. Connect device via USB
+4. Verify with: `adb devices`
+
+## ⚙️ Configuration
+
+### Capabilities
+Modify capabilities in `tests/basic-test.js` or use examples from `config/capabilities.js`:
+
+```javascript
+const capabilities = {
+  platformName: 'Android',
+  'appium:automationName': 'UiAutomator2',
+  'appium:deviceName': 'Android Emulator',
+  'appium:platformVersion': '11.0',
+  'appium:appPackage': 'com.android.calculator2',
+  'appium:appActivity': 'com.android.calculator2.Calculator'
+};
+```
+
+### Environment Variables
+Ensure the following environment variables are set:
+
+```bash
+export JAVA_HOME=/path/to/jdk17
+export ANDROID_HOME=/path/to/android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+```
+
 ## 📋 Available NPM Scripts
 
 ### Setup and Verification
@@ -178,6 +178,12 @@ npm run test:sample
 
 ### Appium Server
 - `npm run start-appium` - Start Appium server
+- `npm run start-server` - Start Appium server with base path
+
+### Driver Management
+- `npm run demo` - Run driver management demonstration
+- `npm run driver:list` - List all available drivers
+- `npm run driver:install` - Install new drivers
 
 ### Android Virtual Device Management
 - `npm run avd` - Show AVD management help
@@ -187,11 +193,26 @@ npm run test:sample
 - `npm run avd:stop` - Stop all running emulators
 
 ### Testing
+- `npm test` - Run basic uiautomator2 test
 - `npm run test:sample` - Run sample Appium test
 
-## 🛠️ Troubleshooting
+## 🔍 Troubleshooting
 
 For common issues and solutions, check our [Troubleshooting Guide](docs/troubleshooting.md).
+
+### Common Issues
+
+**"ECONNREFUSED" Error:**
+- Make sure Appium server is running: `npm run start-server`
+
+**"A new session could not be created" Error:**
+- Ensure Android device/emulator is connected: `adb devices`
+- Check if ADB is in PATH
+- Verify Android SDK setup
+
+**Driver Installation Issues:**
+- Check Appium and driver version compatibility
+- Try installing specific driver versions
 
 ### Quick Fixes
 ```bash
@@ -203,6 +224,12 @@ adb kill-server && adb start-server
 # Check system status
 npm run verify-setup
 adb devices
+
+# Get detailed logs
+npx appium server --log-level debug
+
+# Install specific driver version
+npx appium driver install uiautomator2@3.0.0
 ```
 
 ## 📁 Project Structure
@@ -212,18 +239,37 @@ appium-autotest/
 │   ├── setup-macos-linux.sh    # macOS/Linux setup script
 │   ├── setup-windows.ps1       # Windows setup script
 │   ├── verify-setup.js         # Setup verification script
-│   └── manage-avd.sh           # AVD management utility
+│   ├── manage-avd.sh           # AVD management utility
+│   └── driver-demo.js          # Driver management demo
 ├── config/
 │   ├── appium.config.js        # Appium server configuration
-│   └── android.config.js       # Android-specific configuration
+│   ├── android.config.js       # Android-specific configuration
+│   ├── appium.json             # Appium server settings
+│   └── capabilities.js         # Example capability configurations
 ├── tests/
-│   └── sample-test.js          # Sample Appium test
+│   ├── sample-test.js          # Sample Appium test
+│   └── basic-test.js           # Basic uiautomator2 test
 ├── docs/
 │   ├── quick-start.md          # Quick start guide
-│   └── troubleshooting.md      # Troubleshooting guide
+│   ├── troubleshooting.md      # Troubleshooting guide
+│   └── development-notes.md    # Development notes
 ├── package.json                # Node.js dependencies and scripts
 └── README.md                   # This file
 ```
+
+## 📖 Learning Resources
+
+- [Appium 2 Documentation](https://appium.io/docs/en/2.1/)
+- [uiautomator2 Driver](https://github.com/appium/appium-uiautomator2-driver)
+- [WebDriverIO Appium Guide](https://webdriver.io/docs/appium/)
+
+## 🎯 Next Steps
+
+- [ ] Install xcuitest driver for iOS testing
+- [ ] Add more test examples
+- [ ] Implement Page Object Model
+- [ ] Add CI/CD pipeline
+- [ ] Explore Appium plugins
 
 ## 🤝 Contributing
 1. Fork the repository
