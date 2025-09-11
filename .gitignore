@@ -3,6 +3,21 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+out/
+
+# Test outputs
+test-results/
+allure-results/
+allure-report/
+screenshots/
+videos/
+logs/
 
 # Runtime data
 pids
@@ -17,13 +32,6 @@ coverage/
 # nyc test coverage
 .nyc_output
 
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
 # IDE files
 .vscode/
 .idea/
@@ -31,7 +39,7 @@ coverage/
 *.swo
 *~
 
-# OS generated files
+# OS files
 .DS_Store
 .DS_Store?
 ._*
@@ -40,9 +48,30 @@ coverage/
 ehthumbs.db
 Thumbs.db
 
-# Logs
-logs
-*.log
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Android specific
+*.apk
+*.aab
+local.properties
+
+# iOS specific
+*.ipa
+*.dSYM.zip
+*.dSYM
 
 # Appium specific
 .appium/
+appium.log
+*.log
