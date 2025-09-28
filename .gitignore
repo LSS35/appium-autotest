@@ -12,7 +12,9 @@ build/
 out/
 
 # Test outputs
+mochawesome-report/
 test-results/
+test-results.xml
 allure-results/
 allure-report/
 screenshots/

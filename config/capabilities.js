@@ -5,7 +5,7 @@ const androidBasic = {
   platformName: 'Android',
   'appium:automationName': 'UiAutomator2',
   'appium:deviceName': 'Android Emulator',
-  'appium:platformVersion': '11.0',
+  'appium:platformVersion': '14.0',
   'appium:noReset': true
 };
 
@@ -14,7 +14,7 @@ const androidApp = {
   platformName: 'Android',
   'appium:automationName': 'UiAutomator2',
   'appium:deviceName': 'Android Emulator',
-  'appium:platformVersion': '11.0',
+  'appium:platformVersion': '16.0',
   'appium:app': process.env.APP_PATH || './apps/sample-app.apk', // Set APP_PATH env var or place APK in ./apps/
   'appium:appWaitActivity': '*',
   'appium:noReset': false
@@ -25,7 +25,7 @@ const androidBrowser = {
   platformName: 'Android',
   'appium:automationName': 'UiAutomator2',
   'appium:deviceName': 'Android Emulator',
-  'appium:platformVersion': '11.0',
+  'appium:platformVersion': '16.0',
   'appium:browserName': 'Chrome',
   'appium:noReset': true
 };
@@ -36,7 +36,7 @@ const androidRealDevice = {
   'appium:automationName': 'UiAutomator2',
   'appium:deviceName': 'Real Device', // Use adb devices to get UDID
   'appium:udid': process.env.DEVICE_UDID || 'REPLACE_WITH_DEVICE_UDID', // Run 'adb devices' to get your device UDID
-  'appium:platformVersion': '12.0',
+  'appium:platformVersion': '16.0',
   'appium:noReset': true
 };
 

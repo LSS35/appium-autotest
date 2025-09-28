@@ -2,11 +2,10 @@ const { remote } = require('webdriverio');
 const assert = require('assert');
 const axios = require('axios');
 
-describe('Basic Appium Settings Test', function() {
+describe('Navigate System Settings', function() {
   this.timeout(60000);
 
-  it('should connect to Appium and list elements in Settings', async function() {
-    // Appium uiautomator2 capabilities for Android
+  it('should scroll to and tap a system section', async function() {
     const capabilities = {
       platformName: 'Android',
       'appium:automationName': 'UiAutomator2',
@@ -15,7 +14,6 @@ describe('Basic Appium Settings Test', function() {
       'appium:appActivity': 'com.android.settings.Settings',
       'appium:noReset': true
     };
-    // Function to check if Appium server is running
     async function isAppiumServerRunning(host, port) {
       try {
         const response = await axios.get(`http://${host}:${port}/status`);
@@ -25,7 +23,6 @@ describe('Basic Appium Settings Test', function() {
       }
     }
     let driver;
-    // Check if Appium server is running
     const serverRunning = await isAppiumServerRunning('localhost', 4723);
     if (!serverRunning) {
       throw new Error('Appium server is not running on http://localhost:4723. Please start the server and try again.');
@@ -37,16 +34,23 @@ describe('Basic Appium Settings Test', function() {
         path: '/',
         capabilities
       });
-      // Example: check if keyboard is shown
       await driver.pause(2000);
-      const isKeyboardShown = await driver.isKeyboardShown();
-      console.log('Keyboard shown:', isKeyboardShown);
-      // Try to interact with elements
-      const elements = await driver.$$('*');
-      assert(Array.isArray(elements), 'Elements should be an array');
-      // At least one element should be present
-      assert(elements.length > 0, 'Should find at least one element on screen');
-      console.log('Found', elements.length, 'elements on screen');
+      // Popular section names for universal search (English only)
+      const possibleTargets = [
+        'System', 'About phone', 'Advanced', 'Device info', 'Network & internet', 'Wi‑Fi', 'Display', 'Battery', 'Apps', 'Storage', 'Security', 'Accessibility', 'Accounts', 'Privacy', 'Location', 'Sound', 'Notifications', 'Connected devices', 'Bluetooth', 'Network', 'Internet'
+      ];
+      let found = false;
+      for (const targetText of possibleTargets) {
+        const el = await driver.$(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollTextIntoView(\\"${targetText}\\")`);
+        if (await el.isExisting()) {
+          await el.click();
+          found = true;
+          break;
+        }
+      }
+      assert(found, 'Could not find any of the target items in Settings');
+      await driver.back();
+      await driver.pause(1000);
     } finally {
       if (driver) await driver.deleteSession();
     }

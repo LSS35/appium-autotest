@@ -2,11 +2,10 @@ const { remote } = require('webdriverio');
 const assert = require('assert');
 const axios = require('axios');
 
-describe('Basic Appium Settings Test', function() {
+describe('Visual Settings Test', function() {
   this.timeout(60000);
 
-  it('should connect to Appium and list elements in Settings', async function() {
-    // Appium uiautomator2 capabilities for Android
+  it('should tap a clickable settings item', async function() {
     const capabilities = {
       platformName: 'Android',
       'appium:automationName': 'UiAutomator2',
@@ -15,7 +14,6 @@ describe('Basic Appium Settings Test', function() {
       'appium:appActivity': 'com.android.settings.Settings',
       'appium:noReset': true
     };
-    // Function to check if Appium server is running
     async function isAppiumServerRunning(host, port) {
       try {
         const response = await axios.get(`http://${host}:${port}/status`);
@@ -25,7 +23,6 @@ describe('Basic Appium Settings Test', function() {
       }
     }
     let driver;
-    // Check if Appium server is running
     const serverRunning = await isAppiumServerRunning('localhost', 4723);
     if (!serverRunning) {
       throw new Error('Appium server is not running on http://localhost:4723. Please start the server and try again.');
@@ -37,16 +34,13 @@ describe('Basic Appium Settings Test', function() {
         path: '/',
         capabilities
       });
-      // Example: check if keyboard is shown
       await driver.pause(2000);
-      const isKeyboardShown = await driver.isKeyboardShown();
-      console.log('Keyboard shown:', isKeyboardShown);
-      // Try to interact with elements
-      const elements = await driver.$$('*');
-      assert(Array.isArray(elements), 'Elements should be an array');
-      // At least one element should be present
-      assert(elements.length > 0, 'Should find at least one element on screen');
-      console.log('Found', elements.length, 'elements on screen');
+      const items = await driver.$$('//android.widget.TextView[@clickable="true"]');
+      assert(items.length > 0, 'No clickable TextView found');
+      await items[0].click();
+      await driver.pause(1000);
+      await driver.back();
+      await driver.pause(1000);
     } finally {
       if (driver) await driver.deleteSession();
     }
