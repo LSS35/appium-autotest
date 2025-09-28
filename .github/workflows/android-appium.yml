@@ -51,9 +51,9 @@ jobs:
 
       - name: Check emulator binary exists
         run: |
-          if not test -f ~/Library/Android/sdk/emulator/emulator
-              echo "Emulator binary missing!"; exit 1
-          end
+          if [ ! -f ~/Library/Android/sdk/emulator/emulator ]; then
+            echo "Emulator binary missing!"; exit 1
+          fi
 
       - name: Set up Java
         uses: actions/setup-java@v4
