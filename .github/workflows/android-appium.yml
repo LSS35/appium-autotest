@@ -1,4 +1,4 @@
-name: "🤖📱 Android Appium Tests"
+name: "🤖 Android Appium Tests"
 
 on:
   push:
@@ -71,6 +71,11 @@ jobs:
           npm install -g appium
           npm install -g appium-doctor
           npm ci
+
+      - name: Check package-lock.json is in sync with package.json
+        run: |
+          npm install --package-lock-only --ignore-scripts
+          git diff --exit-code package-lock.json || (echo "package-lock.json is not in sync with package.json. Please run 'npm install' and commit the updated lock file." && exit 1)
 
       - name: Run full local CI-like workflow (AVD, emulator, Appium, tests)
         run: |
