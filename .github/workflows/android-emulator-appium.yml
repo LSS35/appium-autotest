@@ -23,6 +23,12 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: List available Android system images
+        run: sdkmanager --list | grep system-images
+
+      - name: Install Android system image
+        run: sdkmanager 'system-images;android-30;google_apis;x86_64'
+
       - name: Start emulator, Appium, and run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -30,10 +36,31 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel
-          emulator-options: -no-window -no-audio -no-boot-anim
+          emulator-options: -no-window -no-audio -no-boot-anim -wipe-data
           disable-animations: true
           script: |
             adb devices
+            # Wait for emulator to be online and fully booted (max 3 minutes)
+            timeout=180
+            interval=5
+            elapsed=0
+            while [[ "$(adb -s emulator-5554 shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" != "1" ]]; do
+              if ! adb devices | grep -w "emulator-5554" | grep -q "device"; then
+                echo "Emulator not online yet or device offline, waiting..."
+              fi
+              sleep $interval
+              elapsed=$((elapsed + interval))
+              if [[ $elapsed -ge $timeout ]]; then
+                echo "Timeout waiting for emulator to boot and be online."
+                adb devices -l
+                adb logcat -d || true
+                exit 1
+              fi
+            done
+            adb kill-server
+            adb start-server
+            adb devices
+            adb shell input keyevent 82
             npm install -g appium@2.0.0
             appium driver install uiautomator2
             nohup appium --base-path /wd/hub > appium.log 2>&1 &
