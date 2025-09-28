@@ -95,50 +95,15 @@ create_default_avd() {
     fi
 }
 
-# Create an ARM64 AVD for Apple Silicon/CI
+# Create an ARM64 AVD for Apple Silicon/CI (now the default)
 create_arm64_avd() {
     local avd_name="pixel_4_arm64"
-    local package="system-images;android-33;default;arm64-v8a"
+    local package="system-images;android-33;google_apis;arm64-v8a"
 
     print_status $BLUE "🔨 Creating ARM64 AVD: $avd_name"
 
-    # Check if system image is installed
-    if ! "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --list | grep -q "$package.*Installed"; then
-        print_status $YELLOW "📦 Installing system image: $package"
-        "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$package"
-    fi
-
-    # Create AVD
-    echo "no" | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd \
-        --name "$avd_name" \
-        --package "$package" \
-        --device "pixel_4" \
-        --force
-
-    print_status $GREEN "✅ ARM64 AVD '$avd_name' created successfully"
-
-    # Configure AVD for better performance
-    local avd_config="$HOME/.android/avd/${avd_name}.avd/config.ini"
-    if [ -f "$avd_config" ]; then
-        print_status $BLUE "⚙️  Configuring ARM64 AVD for better performance..."
-        echo "hw.gpu.enabled=yes" >> "$avd_config"
-        echo "hw.gpu.mode=host" >> "$avd_config"
-        echo "hw.ramSize=4096" >> "$avd_config"
-        echo "vm.heapSize=512" >> "$avd_config"
-        echo "hw.keyboard=yes" >> "$avd_config"
-        print_status $GREEN "✅ ARM64 AVD configuration updated"
-    fi
-}
-
-# Create an x86_64 AVD for CI and local use
-create_x86_64_avd() {
-    local avd_name="pixel_4_x86_64"
-    local package="system-images;android-33;google_apis;x86_64"
-
-    print_status $BLUE "🔨 Creating x86_64 AVD: $avd_name"
-
     # Check if system image directory exists (cache-friendly)
-    if [ ! -d "$ANDROID_HOME/system-images/android-33/google_apis/x86_64" ]; then
+    if [ ! -d "$ANDROID_HOME/system-images/android-33/google_apis/arm64-v8a" ]; then
         print_status $YELLOW "📦 Installing system image: $package"
         yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$package"
     fi
@@ -150,21 +115,21 @@ create_x86_64_avd() {
             --package "$package" \
             --device "pixel_4" \
             --force
-        print_status $GREEN "✅ x86_64 AVD '$avd_name' created successfully"
+        print_status $GREEN "✅ ARM64 AVD '$avd_name' created successfully"
     else
-        print_status $GREEN "✅ x86_64 AVD '$avd_name' already exists"
+        print_status $GREEN "✅ ARM64 AVD '$avd_name' already exists"
     fi
 
     # Configure AVD for better performance
     local avd_config="$HOME/.android/avd/${avd_name}.avd/config.ini"
     if [ -f "$avd_config" ]; then
-        print_status $BLUE "⚙️  Configuring x86_64 AVD for better performance..."
+        print_status $BLUE "⚙️  Configuring ARM64 AVD for better performance..."
         echo "hw.gpu.enabled=yes" >> "$avd_config"
         echo "hw.gpu.mode=host" >> "$avd_config"
         echo "hw.ramSize=4096" >> "$avd_config"
         echo "vm.heapSize=512" >> "$avd_config"
         echo "hw.keyboard=yes" >> "$avd_config"
-        print_status $GREEN "✅ x86_64 AVD configuration updated"
+        print_status $GREEN "✅ ARM64 AVD configuration updated"
     fi
 }
 
@@ -240,7 +205,6 @@ show_help() {
     echo "  images        List installed system images"
     echo "  create        Create default AVD for testing"
     echo "  create-arm64  Create ARM64 AVD for Apple Silicon/CI"
-    echo "  create-x86_64 Create x86_64 AVD for CI and local use"
     echo "  start [name]  Start an AVD (prompts for name if not provided)"
     echo "  stop          Stop all running emulators"
     echo "  help          Show this help message"
@@ -272,10 +236,6 @@ main() {
         "create-arm64")
             check_android_sdk
             create_arm64_avd
-            ;;
-        "create-x86_64")
-            check_android_sdk
-            create_x86_64_avd
             ;;
         "start")
             check_android_sdk

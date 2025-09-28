@@ -29,14 +29,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-cache-
 
-      # Cache Android system image only (API 33, google_apis, x86_64)
+      # Cache Android ARM64 system image only (API 33, google_apis, arm64-v8a)
       - name: Cache Android system image
         uses: actions/cache@v4
         with:
-          path: ~/Library/Android/sdk/system-images/android-33/google_apis/x86_64
-          key: ${{ runner.os }}-android-system-image-33-google_apis-x86_64
+          path: ~/Library/Android/sdk/system-images/android-33/google_apis/arm64-v8a
+          key: ${{ runner.os }}-android-system-image-33-google_apis-arm64-v8a
           restore-keys: |
-            ${{ runner.os }}-android-system-image-33-google_apis-x86_64
+            ${{ runner.os }}-android-system-image-33-google_apis-arm64-v8a
 
       # Cache the rest of the Android SDK (excluding system-images and emulator)
       - name: Cache Android SDK (core)
@@ -50,7 +50,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-android-sdk-core-v1
 
-      - name: Install Android SDK components (emulator + tools + system image)
+      - name: Install Android SDK components (emulator + tools + ARM system image)
         run: |
           export ANDROID_SDK_ROOT=~/Library/Android/sdk
           export ANDROID_HOME=~/Library/Android/sdk
@@ -60,7 +60,7 @@ jobs:
             "platforms;android-33" \
             "build-tools;33.0.2" \
             "emulator" \
-            "system-images;android-33;google_apis;x86_64"
+            "system-images;android-33;google_apis;arm64-v8a"
 
       - name: Verify emulator installation
         run: |
