@@ -27,11 +27,26 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 30
-          target: default
+          target: google_apis
           arch: x86_64
           profile: pixel
           emulator-options: -no-window -no-audio -no-boot-anim
+          disable-animations: true
           script: echo "Emulator started"
+
+      - name: Wait for emulator to be ready
+        run: |
+          adb devices
+          adb wait-for-device
+          boot_completed=""
+          retry=0
+          until [[ "$boot_completed" == "1" || $retry -ge 30 ]]; do
+            boot_completed=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+            echo "Waiting for emulator... ($retry)"
+            sleep 5
+            ((retry++))
+          done
+          adb shell input keyevent 82
 
       - name: Install Appium
         run: |
@@ -55,4 +70,3 @@ jobs:
         with:
           name: junit-report
           path: app/build/reports/tests/test/
-
