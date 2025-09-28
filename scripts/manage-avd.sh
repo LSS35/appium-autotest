@@ -95,6 +95,82 @@ create_default_avd() {
     fi
 }
 
+# Create an ARM64 AVD for Apple Silicon/CI (now the default)
+create_arm64_avd() {
+    local avd_name="pixel_4_arm64"
+    local package="system-images;android-33;google_apis;arm64-v8a"
+
+    print_status $BLUE "🔨 Creating ARM64 AVD: $avd_name"
+
+    # Check if system image directory exists (cache-friendly)
+    if [ ! -d "$ANDROID_HOME/system-images/android-33/google_apis/arm64-v8a" ]; then
+        print_status $YELLOW "📦 Installing system image: $package"
+        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$package"
+    fi
+
+    # Create AVD if it doesn't exist
+    if ! emulator -list-avds | grep -q "^$avd_name$"; then
+        echo "no" | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd \
+            --name "$avd_name" \
+            --package "$package" \
+            --device "pixel_4" \
+            --force
+        print_status $GREEN "✅ ARM64 AVD '$avd_name' created successfully"
+    else
+        print_status $GREEN "✅ ARM64 AVD '$avd_name' already exists"
+    fi
+
+    # Configure AVD for better performance
+    local avd_config="$HOME/.android/avd/${avd_name}.avd/config.ini"
+    if [ -f "$avd_config" ]; then
+        print_status $BLUE "⚙️  Configuring ARM64 AVD for better performance..."
+        echo "hw.gpu.enabled=yes" >> "$avd_config"
+        echo "hw.gpu.mode=host" >> "$avd_config"
+        echo "hw.ramSize=4096" >> "$avd_config"
+        echo "vm.heapSize=512" >> "$avd_config"
+        echo "hw.keyboard=yes" >> "$avd_config"
+        print_status $GREEN "✅ ARM64 AVD configuration updated"
+    fi
+}
+
+# Create an x86_64 AVD for CI and local use
+create_x86_64_avd() {
+    local avd_name="pixel_4_x86_64"
+    local package="system-images;android-33;google_apis;x86_64"
+
+    print_status $BLUE "🔨 Creating x86_64 AVD: $avd_name"
+
+    # Check if system image directory exists (cache-friendly)
+    if [ ! -d "$ANDROID_HOME/system-images/android-33/google_apis/x86_64" ]; then
+        print_status $YELLOW "📦 Installing system image: $package"
+        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$package"
+    fi
+
+    # Create AVD if it doesn't exist
+    if ! emulator -list-avds | grep -q "^$avd_name$"; then
+        echo "no" | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd \
+            --name "$avd_name" \
+            --package "$package" \
+            --device "pixel_4" \
+            --force
+        print_status $GREEN "✅ x86_64 AVD '$avd_name' created successfully"
+    else
+        print_status $GREEN "✅ x86_64 AVD '$avd_name' already exists"
+    fi
+
+    # Configure AVD for better performance
+    local avd_config="$HOME/.android/avd/${avd_name}.avd/config.ini"
+    if [ -f "$avd_config" ]; then
+        print_status $BLUE "⚙️  Configuring x86_64 AVD for better performance..."
+        echo "hw.gpu.enabled=yes" >> "$avd_config"
+        echo "hw.gpu.mode=host" >> "$avd_config"
+        echo "hw.ramSize=4096" >> "$avd_config"
+        echo "vm.heapSize=512" >> "$avd_config"
+        echo "hw.keyboard=yes" >> "$avd_config"
+        print_status $GREEN "✅ x86_64 AVD configuration updated"
+    fi
+}
+
 # Start an AVD
 start_avd() {
     local avd_name=$1
@@ -113,10 +189,24 @@ start_avd() {
     
     print_status $BLUE "🚀 Starting AVD: $avd_name"
     print_status $YELLOW "⏳ This may take a few minutes..."
-    
-    # Start emulator in background
-    emulator -avd "$avd_name" -no-snapshot-save -no-audio &
-    
+
+    # Hard check for emulator binary and Qt libraries
+    local emulator_bin="$ANDROID_HOME/emulator/emulator"
+    local qt_lib_dir="$ANDROID_HOME/emulator/lib64/qt/lib"
+    if [ ! -x "$emulator_bin" ]; then
+        print_status $RED "❌ Emulator binary missing or not executable: $emulator_bin"
+        ls -l "$ANDROID_HOME/emulator" || true
+        exit 1
+    fi
+    if [ ! -d "$qt_lib_dir" ]; then
+        print_status $RED "❌ Qt library directory missing: $qt_lib_dir"
+        ls -l "$ANDROID_HOME/emulator/lib64/qt" || true
+        exit 1
+    fi
+
+    # Start emulator in background using full path
+    "$emulator_bin" -avd "$avd_name" -no-snapshot-save -no-audio &
+
     print_status $GREEN "✅ AVD start command issued"
     print_status $YELLOW "💡 The emulator is starting in the background"
     print_status $YELLOW "💡 You can check status with: adb devices"
@@ -152,6 +242,8 @@ show_help() {
     echo "  list          List available AVDs"
     echo "  images        List installed system images"
     echo "  create        Create default AVD for testing"
+    echo "  create-arm64  Create ARM64 AVD for Apple Silicon/CI"
+    echo "  create-x86_64 Create x86_64 AVD for CI and local use"
     echo "  start [name]  Start an AVD (prompts for name if not provided)"
     echo "  stop          Stop all running emulators"
     echo "  help          Show this help message"
@@ -179,6 +271,14 @@ main() {
         "create")
             check_android_sdk
             create_default_avd
+            ;;
+        "create-arm64")
+            check_android_sdk
+            create_arm64_avd
+            ;;
+        "create-x86_64")
+            check_android_sdk
+            create_x86_64_avd
             ;;
         "start")
             check_android_sdk

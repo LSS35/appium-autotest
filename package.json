@@ -1,38 +1,46 @@
 {
   "name": "appium-autotest",
   "version": "1.0.0",
-  "description": "Mobile automation testing setup with Appium",
+  "description": "Appium 2 automation testing project with uiautomator2 driver support",
   "main": "index.js",
   "scripts": {
     "verify-setup": "node scripts/verify-setup.js",
     "doctor": "npx appium-doctor",
+    "test": "mocha tests/*-test.js --reporter mochawesome",
+    "test:ci": "npx mocha --require tests/hooks.js tests/**/*.js --reporter mochawesome",
+    "demo": "node scripts/driver-demo.js",
+    "appium": "appium",
     "start-appium": "appium",
+    "start-server": "appium server --base-path=/wd/hub",
     "start-emulator": "emulator -list-avds && echo 'Use: emulator -avd <AVD_NAME>'",
+    "driver:list": "appium driver list",
+    "driver:install": "appium driver install",
     "avd": "./scripts/manage-avd.sh",
     "avd:list": "./scripts/manage-avd.sh list",
     "avd:create": "./scripts/manage-avd.sh create",
     "avd:start": "./scripts/manage-avd.sh start",
-    "avd:stop": "./scripts/manage-avd.sh stop",
-    "test": "echo \"No tests specified yet\" && exit 0",
-    "test:sample": "node tests/sample-test.js"
+    "avd:stop": "./scripts/manage-avd.sh stop"
   },
   "keywords": [
     "appium",
-    "mobile",
     "automation",
     "testing",
+    "uiautomator2",
     "android",
+    "mobile",
     "ios"
   ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "appium": "^2.0.0",
+    "appium": "^2.19.0",
     "appium-doctor": "^1.16.2",
-    "appium-uiautomator2-driver": "^4.2.9"
+    "appium-uiautomator2-driver": "^3.10.0",
+    "mocha": "^11.7.2",
+    "mocha-junit-reporter": "^2.2.1"
   },
   "dependencies": {
     "appium-inspector": "^2023.2.1",
-    "webdriverio": "^8.0.0"
+    "webdriverio": "^9.19.2"
   }
 }

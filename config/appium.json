@@ -1,0 +1,15 @@
+{
+  "server": {
+    "address": "localhost",
+    "port": 4723,
+    "basePath": "/wd/hub",
+    "logLevel": "info"
+  },
+  "drivers": {
+    "uiautomator2": {
+      "source": "npm",
+      "package": "appium-uiautomator2-driver"
+    }
+  },
+  "plugins": {}
+}

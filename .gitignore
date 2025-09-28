@@ -12,12 +12,27 @@ build/
 out/
 
 # Test outputs
+mochawesome-report/
 test-results/
+test-results.xml
 allure-results/
 allure-report/
 screenshots/
 videos/
 logs/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
 
 # IDE files
 .vscode/
@@ -59,5 +74,7 @@ local.properties
 *.dSYM
 
 # Appium specific
+.appium/
 appium.log
 *.log
+test-results.xml

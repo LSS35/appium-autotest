@@ -22,14 +22,14 @@ Choose your platform:
 npm run verify-setup
 ```
 
-### 3. Create Android Virtual Device
+### 3. Create Android Virtual Device (ARM64)
 ```bash
-npm run avd:create
+npm run avd:create-arm64
 ```
 
-### 4. Start Emulator
+### 4. Start Emulator (ARM64)
 ```bash
-npm run avd:start
+npm run avd:start pixel_4_arm64
 ```
 
 ### 5. Start Appium Server
@@ -51,11 +51,11 @@ npm run test:sample
 ### Appium Server
 - `npm run start-appium` - Start Appium server
 
-### Android Virtual Device Management
+### Android Virtual Device Management (ARM64 only)
 - `npm run avd` - Show AVD management help
 - `npm run avd:list` - List available AVDs
-- `npm run avd:create` - Create default test AVD
-- `npm run avd:start` - Start an AVD
+- `npm run avd:create-arm64` - Create ARM64 test AVD
+- `npm run avd:start pixel_4_arm64` - Start the ARM64 AVD
 - `npm run avd:stop` - Stop all running emulators
 
 ### Testing

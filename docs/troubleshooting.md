@@ -2,7 +2,7 @@
 
 This guide helps you resolve common issues when setting up and using the Appium mobile automation environment.
 
-## 🔧 Installation Issues
+## 🛠️ Installation Issues
 
 ### Java Issues
 
@@ -57,326 +57,65 @@ sudo apt-get install -y nodejs
 **Solution:**
 ```bash
 # Use nvm (recommended)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-nvm install node
-nvm use node
-
-# Or fix npm permissions
-sudo chown -R $(whoami) ~/.npm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm-sh/nvm/v0.39.0/install.sh | bash
 ```
 
-### Android SDK Issues
+## 🖥️ Emulator & AVD Issues (ARM64 Only)
 
-#### Issue: `ANDROID_HOME not set`
-**Solution:**
+### Issue: Emulator fails to start or missing Qt libraries
+- **Cause:** Emulator or system image mismatch, or missing ARM64 system image.
+- **Solution:**
+  - Ensure you have created the ARM64 AVD:
+    ```bash
+    npm run avd:create-arm64
+    ```
+  - Start the ARM64 AVD:
+    ```bash
+    npm run avd:start pixel_4_arm64
+    ```
+  - If you see errors about missing Qt libraries or emulator binary, re-run the setup script and ensure ANDROID_HOME is set correctly.
+
+### Issue: Emulator downloads system image every run
+- **Cause:** Cache is not used or system image is not ARM64.
+- **Solution:**
+  - Use GitHub Actions cache for `$ANDROID_HOME/system-images/android-33/google_apis/arm64-v8a`.
+  - Ensure all scripts and workflow steps use only ARM64 AVD and system image.
+
+### Issue: Emulator stuck on boot
+- **Solution:**
+  - Make sure virtualization is enabled in BIOS/firmware.
+  - Try increasing RAM in the AVD config.
+  - Restart your machine and try again.
+
+## 🧪 Appium Issues
+
+### Issue: Appium server fails to start
+- **Solution:**
+  - Ensure Appium 2.x is installed globally: `npm install -g appium`
+  - Check for port conflicts: `lsof -i :4723`
+  - Kill any existing Appium processes: `pkill -f appium`
+
+### Issue: Tests fail to connect to emulator
+- **Solution:**
+  - Ensure the emulator is running: `adb devices`
+  - Restart adb: `adb kill-server && adb start-server`
+  - Use the correct device name: `pixel_4_arm64`
+
+## 🔗 Useful Commands
+
 ```bash
-# Find your Android SDK location (usually):
-# macOS: ~/Library/Android/sdk
-# Linux: ~/Android/Sdk
-# Windows: %USERPROFILE%\AppData\Local\Android\Sdk
+# List AVDs
+npm run avd:list
 
-export ANDROID_HOME=/path/to/android/sdk
-export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
-```
+# Create ARM64 AVD
+npm run avd:create-arm64
 
-#### Issue: Android SDK tools not found
-**Solution:**
-```bash
-# Download command line tools
-cd $ANDROID_HOME
-# Download from: https://developer.android.com/studio/index.html#command-tools
+# Start ARM64 AVD
+npm run avd:start pixel_4_arm64
 
-# Install required packages
-sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
-```
+# Stop all emulators
+npm run avd:stop
 
-#### Issue: `adb: command not found`
-**Solution:**
-```bash
-# Add platform-tools to PATH
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-# Or install standalone adb
-# macOS
-brew install android-platform-tools
-
-# Linux
-sudo apt install android-tools-adb
-```
-
-## 🔧 Appium Issues
-
-### Appium Doctor Issues
-
-#### Issue: "✖ ANDROID_HOME is NOT set!"
-**Solution:**
-```bash
-export ANDROID_HOME=/path/to/android/sdk
-echo 'export ANDROID_HOME=/path/to/android/sdk' >> ~/.bashrc  # or ~/.zshrc
-```
-
-#### Issue: "✖ JAVA_HOME is NOT set!"
-**Solution:**
-```bash
-export JAVA_HOME=/path/to/jdk17
-echo 'export JAVA_HOME=/path/to/jdk17' >> ~/.bashrc  # or ~/.zshrc
-```
-
-#### Issue: "✖ adb could not be found"
-**Solution:**
-```bash
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-# Restart terminal and run: adb version
-```
-
-#### Issue: "✖ android could not be found"
-**This is a known warning and can usually be ignored. The `android` command was deprecated.**
-
-### Appium Server Issues
-
-#### Issue: `appium: command not found`
-**Solution:**
-```bash
-npm install -g appium@next
-npm install -g appium-doctor
-```
-
-#### Issue: "Error: listen EADDRINUSE :::4723"
-**Solution:**
-```bash
-# Kill existing Appium processes
-pkill -f appium
-
-# Or use different port
-appium -p 4724
-```
-
-#### Issue: "No drivers have been installed"
-**Solution:**
-```bash
-appium driver install uiautomator2
-appium driver install xcuitest  # for iOS
-appium driver list
-```
-
-#### Issue: Appium server crashes on startup
-**Check logs and try:**
-```bash
-# Update Appium
-npm update -g appium
-
-# Reinstall drivers
-appium driver uninstall uiautomator2
-appium driver install uiautomator2
-```
-
-## 🔧 Emulator Issues
-
-### Android Emulator Issues
-
-#### Issue: "No emulators found"
-**Solution:**
-```bash
-# List available AVDs
-emulator -list-avds
-
-# Create new AVD
-avdmanager create avd -n TestAVD -k "system-images;android-33;google_apis;x86_64"
-```
-
-#### Issue: Emulator won't start
-**Solution:**
-```bash
-# Check if virtualization is enabled
-# Intel: VT-x must be enabled in BIOS
-# AMD: AMD-V must be enabled in BIOS
-
-# For Linux, install KVM
-sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
-
-# Add user to groups
-sudo usermod -aG libvirt $USER
-sudo usermod -aG kvm $USER
-```
-
-#### Issue: Emulator is slow
-**Solutions:**
-- Use x86_64 system images instead of ARM
-- Increase RAM allocation in AVD settings
-- Enable hardware acceleration (Intel HAXM/Hyper-V)
-- Close unnecessary applications
-
-#### Issue: "Intel HAXM installation failed"
-**Solution for macOS:**
-```bash
-# Enable virtualization in BIOS
-# Install Intel HAXM
-brew install --cask intel-haxm
-```
-
-**Solution for Windows:**
-```bash
-# Disable Hyper-V if using Intel HAXM
-dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
-
-# Or use Hyper-V instead of HAXM
-# Enable Windows Hypervisor Platform
-dism.exe /Online /Enable-Feature /FeatureName:HypervisorPlatform /All
-```
-
-### Connection Issues
-
-#### Issue: "Could not find a connected Android device"
-**Solution:**
-```bash
-# Check connected devices
+# Check running devices
 adb devices
-
-# Start emulator
-emulator -avd YOUR_AVD_NAME
-
-# Wait for emulator to fully boot
-adb wait-for-device
 ```
-
-#### Issue: Device unauthorized
-**Solution:**
-```bash
-# Kill adb server
-adb kill-server
-adb start-server
-
-# Accept RSA key fingerprint on device/emulator
-# Check 'Always allow from this computer' checkbox
-```
-
-## 🔧 Test Execution Issues
-
-### WebDriverIO Issues
-
-#### Issue: "Cannot resolve module 'webdriverio'"
-**Solution:**
-```bash
-npm install webdriverio
-```
-
-#### Issue: Session creation failed
-**Check these points:**
-1. Appium server is running
-2. Emulator/device is connected
-3. Capabilities match your device
-4. App package/activity is correct
-
-#### Issue: Element not found
-**Solutions:**
-- Use Appium Inspector to find correct selectors
-- Add explicit waits
-- Check if element is in a different context (web view)
-
-### Permission Issues
-
-#### Issue: App permissions not granted
-**Solution:**
-Add to capabilities:
-```javascript
-{
-  autoGrantPermissions: true,
-  // or
-  permissions: ['android.permission.CAMERA', 'android.permission.WRITE_EXTERNAL_STORAGE']
-}
-```
-
-## 🔧 Platform-Specific Issues
-
-### macOS Issues
-
-#### Issue: Xcode Command Line Tools not found
-**Solution:**
-```bash
-xcode-select --install
-```
-
-#### Issue: Homebrew permission issues
-**Solution:**
-```bash
-sudo chown -R $(whoami) /opt/homebrew
-```
-
-### Windows Issues
-
-#### Issue: PowerShell execution policy
-**Solution:**
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-#### Issue: Long path names
-**Solution:**
-Enable long paths in Windows:
-```powershell
-# Run as Administrator
-New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
-```
-
-### Linux Issues
-
-#### Issue: Permission denied for /dev/kvm
-**Solution:**
-```bash
-sudo usermod -aG kvm $USER
-# Logout and login again
-```
-
-#### Issue: Missing 32-bit libraries
-**Solution:**
-```bash
-sudo apt install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
-```
-
-## 🔧 Performance Optimization
-
-### Speed up tests
-1. Use `skipDeviceInitialization: true` for faster startup
-2. Use `noReset: true` to skip app reinstallation
-3. Disable animations: `disableWindowAnimation: true`
-4. Use parallel execution for multiple tests
-
-### Reduce flakiness
-1. Add proper waits instead of hard sleeps
-2. Use stable locators (ID > accessibility ID > XPath)
-3. Handle dynamic content properly
-4. Implement retry mechanisms
-
-## 🆘 Getting Help
-
-### Log Analysis
-Always check logs when troubleshooting:
-```bash
-# Appium server logs
-appium --log-level debug
-
-# ADB logs
-adb logcat
-
-# Emulator logs
-emulator -avd YOUR_AVD -verbose
-```
-
-### Useful Commands
-```bash
-# System info
-appium-doctor
-adb devices
-emulator -list-avds
-
-# Reset everything
-adb kill-server
-pkill -f appium
-pkill -f emulator
-```
-
-### Community Resources
-- [Appium Documentation](https://appium.io/docs/)
-- [Appium GitHub Issues](https://github.com/appium/appium/issues)
-- [Stack Overflow Appium Tag](https://stackoverflow.com/questions/tagged/appium)
-- [Appium Slack Community](https://appium.slack.com/)
