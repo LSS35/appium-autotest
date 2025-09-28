@@ -1,4 +1,4 @@
-name: Android Tests
+name: Android Instrumented UI Tests
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ '*' ]
 
 jobs:
-  test:
+  instrumented-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,6 +19,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
@@ -33,14 +36,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Build and run tests
-        run: ./gradlew test
-
-      # For instrumented tests on an emulator:
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Start emulator and run instrumented tests
+      - name: Run instrumented tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 33
