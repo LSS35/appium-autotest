@@ -11,13 +11,13 @@ print_status() {
   echo -e "${1}${2}${nc}"
 }
 
-# 1. Create ARM64 AVD if needed
-print_status $yellow "[1/5] Creating ARM64 AVD if needed..."
-./scripts/manage-avd.sh create-arm64
+# 1. Create x86_64 AVD if needed
+print_status $yellow "[1/5] Creating x86_64 AVD if needed..."
+./scripts/manage-avd.sh create-x86_64
 
 # 2. Start the emulator
-print_status $yellow "[2/5] Starting ARM64 emulator..."
-./scripts/manage-avd.sh start pixel_4_arm64
+print_status $yellow "[2/5] Starting x86_64 emulator..."
+./scripts/manage-avd.sh start pixel_4_x86_64
 
 # Wait for emulator to boot
 print_status $yellow "[2/5] Waiting for emulator to boot..."
@@ -53,4 +53,3 @@ print_status $green "✅ All done!"
 
 print_status $green "\nView mochawesome-report/mochawesome.html for results."
 print_status $green "Check artifacts/screenshots/ and artifacts/videos/ for media."
-
