@@ -30,7 +30,7 @@ jobs:
         run: sdkmanager 'system-images;android-30;google_apis;x86_64'
 
       - name: Build with Gradle
-        uses: vgaidarji/android-github-actions-build@v1.1.2
+        uses: vgaidarji/android-github-actions-build@v1.1.0
         with:
           args: "assembleDebug"
 
