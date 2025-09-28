@@ -40,22 +40,23 @@ For full functionality, run the setup on a local development machine where:
 - Platform-specific optimizations
 
 ### AVD Management (`scripts/manage-avd.sh`)
-- Create default testing AVDs
+- Create ARM64 testing AVDs (`pixel_4_arm64`)
 - List available virtual devices
-- Start/stop emulator management
+- Start/stop emulator management (ARM64 only)
 - Performance optimization
 
 ## Usage Patterns
 
 1. **First Time Setup**: Run platform-specific setup script
 2. **Verification**: Use `npm run verify-setup` to check installation
-3. **Development**: Use NPM scripts for common tasks
+3. **Development**: Use NPM scripts for common tasks (see Quick Start)
 4. **Troubleshooting**: Reference `docs/troubleshooting.md`
 
 ## Best Practices
 
 - Always verify setup after running installation scripts
-- Use AVD management scripts for consistent emulator configuration
-- Check environment variables are properly set
+- Use AVD management scripts for consistent ARM64 emulator configuration
+- Check environment variables are properly set (ANDROID_HOME, JAVA_HOME)
 - Use the troubleshooting guide for common issues
 - Keep tools updated regularly
+- Use only ARM64 AVDs and system images for CI and local development
