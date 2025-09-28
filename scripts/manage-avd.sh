@@ -186,10 +186,24 @@ start_avd() {
     
     print_status $BLUE "🚀 Starting AVD: $avd_name"
     print_status $YELLOW "⏳ This may take a few minutes..."
-    
-    # Start emulator in background
-    emulator -avd "$avd_name" -no-snapshot-save -no-audio &
-    
+
+    # Hard check for emulator binary and Qt libraries
+    local emulator_bin="$ANDROID_HOME/emulator/emulator"
+    local qt_lib_dir="$ANDROID_HOME/emulator/lib64/qt/lib"
+    if [ ! -x "$emulator_bin" ]; then
+        print_status $RED "❌ Emulator binary missing or not executable: $emulator_bin"
+        ls -l "$ANDROID_HOME/emulator" || true
+        exit 1
+    fi
+    if [ ! -d "$qt_lib_dir" ]; then
+        print_status $RED "❌ Qt library directory missing: $qt_lib_dir"
+        ls -l "$ANDROID_HOME/emulator/lib64/qt" || true
+        exit 1
+    fi
+
+    # Start emulator in background using full path
+    "$emulator_bin" -avd "$avd_name" -no-snapshot-save -no-audio &
+
     print_status $GREEN "✅ AVD start command issued"
     print_status $YELLOW "💡 The emulator is starting in the background"
     print_status $YELLOW "💡 You can check status with: adb devices"

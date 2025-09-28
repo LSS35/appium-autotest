@@ -50,14 +50,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-android-sdk-core-v1
 
-      - name: Ensure emulator is installed and up to date
+      - name: Install Android SDK components (emulator + tools + system image)
         run: |
           export ANDROID_SDK_ROOT=~/Library/Android/sdk
           export ANDROID_HOME=~/Library/Android/sdk
-          yes | ~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --install "emulator"
-        env:
-          ANDROID_SDK_ROOT: ~/Library/Android/sdk
-          ANDROID_HOME: ~/Library/Android/sdk
+          yes | sdkmanager --licenses
+          yes | sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-33" \
+            "build-tools;33.0.2" \
+            "emulator" \
+            "system-images;android-33;google_apis;x86_64"
 
       - name: Verify emulator installation
         run: |
@@ -65,9 +68,6 @@ jobs:
           export ANDROID_HOME=~/Library/Android/sdk
           ls -l ~/Library/Android/sdk/emulator || true
           ls -l ~/Library/Android/sdk/emulator/lib64/qt || true
-          if [ ! -x ~/Library/Android/sdk/emulator/emulator ]; then
-            echo "Emulator binary missing or not executable!"; exit 1
-          fi
           ~/Library/Android/sdk/emulator/emulator -version || true
 
       - name: Set up Java
