@@ -1,4 +1,4 @@
-name: Android Emulator Appium Test
+name: Android Tests
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,62 +18,31 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: 17
 
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build and run tests
+        run: ./gradlew test
+
+      # For instrumented tests on an emulator:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: List available Android system images
-        run: sdkmanager --list | grep system-images
-
-      - name: Install Android system image
-        run: sdkmanager 'system-images;android-30;google_apis;x86_64'
-
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug
-
-      - name: Start emulator, Appium, and run tests
+      - name: Start emulator and run instrumented tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
-          target: google_apis
+          api-level: 33
           arch: x86_64
-          profile: pixel
-          emulator-options: -no-window -no-audio -no-boot-anim -wipe-data
-          disable-animations: true
-          script: |
-            adb devices
-            # Wait for emulator to be online and fully booted (max 3 minutes)
-            timeout=180
-            interval=5
-            elapsed=0
-            while [[ "$(adb -s emulator-5554 shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" != "1" ]]; do
-              if ! adb devices | grep -w "emulator-5554" | grep -q "device"; then
-                echo "Emulator not online yet or device offline, waiting..."
-              fi
-              sleep $interval
-              elapsed=$((elapsed + interval))
-              if [[ $elapsed -ge $timeout ]]; then
-                echo "Timeout waiting for emulator to boot and be online."
-                adb devices -l
-                adb logcat -d || true
-                exit 1
-              fi
-            done
-            adb kill-server
-            adb start-server
-            adb devices
-            adb shell input keyevent 82
-            npm install -g appium@2.0.0
-            appium driver install uiautomator2
-            nohup appium --base-path /wd/hub > appium.log 2>&1 &
-            sleep 10
-            chmod +x ./gradlew
-            ./gradlew test
-
-      - name: Upload test reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: junit-report
-          path: app/build/reports/tests/test/
+          script: ./gradlew connectedAndroidTest
