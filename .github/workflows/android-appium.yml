@@ -29,19 +29,26 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-cache-
 
-      # Cache Android SDK and system images
-      - name: Cache Android SDK
+      # Cache Android system image only (API 33, google_apis, x86_64)
+      - name: Cache Android system image
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Android/sdk/system-images/android-33/google_apis/x86_64
+          key: ${{ runner.os }}-android-system-image-33-google_apis-x86_64
+          restore-keys: |
+            ${{ runner.os }}-android-system-image-33-google_apis-x86_64
+
+      # Cache the rest of the Android SDK (excluding system-images and emulator)
+      - name: Cache Android SDK (core)
         uses: actions/cache@v4
         with:
           path: |
             ~/Library/Android/sdk/platforms
-            ~/Library/Android/sdk/system-images
             ~/Library/Android/sdk/platform-tools
-            ~/Library/Android/sdk/emulator
             ~/Library/Android/sdk/build-tools
-          key: ${{ runner.os }}-android-sdk-${{ hashFiles('scripts/run-local-ci.sh') }}-${{ hashFiles('config/android.config.js') }}
+          key: ${{ runner.os }}-android-sdk-core-v1
           restore-keys: |
-            ${{ runner.os }}-android-sdk-
+            ${{ runner.os }}-android-sdk-core-v1
 
       - name: Ensure emulator is installed and up to date
         run: |
