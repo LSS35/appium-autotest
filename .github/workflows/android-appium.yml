@@ -46,42 +46,6 @@ jobs:
           npm install -g appium-doctor
           npm ci
 
-      - name: Create ARM64 AVD if needed (local/dev only)
-        if: runner.os == 'macOS'
+      - name: Run full local CI-like workflow (AVD, emulator, Appium, tests)
         run: |
-          ./scripts/manage-avd.sh create-arm64
-
-      - name: Set up Android SDK and run tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 33
-          target: default
-          arch: arm64-v8a
-          profile: pixel_4
-          script: |
-            npx appium --version
-            npx appium-doctor --android
-            npm test || npx mocha --require tests/hooks.js tests/**/*.js --reporter mochawesome
-
-      - name: Archive test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: |
-            test-results.xml
-            mochawesome-report/
-
-      - name: Archive screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: artifacts/screenshots/
-
-      - name: Archive videos
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: videos
-          path: artifacts/videos/
+          ./scripts/run-local-ci.sh
