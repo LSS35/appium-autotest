@@ -2,9 +2,9 @@ name: Android Emulator Appium Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ '*' ]
   pull_request:
-    branches: [ main ]
+    branches: [ '*' ]
 
 jobs:
   test:
@@ -30,9 +30,7 @@ jobs:
         run: sdkmanager 'system-images;android-30;google_apis;x86_64'
 
       - name: Build with Gradle
-        uses: vgaidarji/android-github-actions-build@v1.1.0
-        with:
-          args: "assembleDebug"
+        run: ./gradlew assembleDebug
 
       - name: Start emulator, Appium, and run tests
         uses: reactivecircus/android-emulator-runner@v2
