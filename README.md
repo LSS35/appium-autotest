@@ -1,6 +1,10 @@
+[![CI](https://github.com/LSS35/appium-autotest/actions/workflows/android-appium.yml/badge.svg)](https://github.com/LSS35/appium-autotest/actions/workflows/android-appium.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E=16-brightgreen)](https://nodejs.org/)
+
 # Appium 2 Mobile Automation Educational Setup
 
-This project provides a minimal Appium 2 setup for Android automation testing using the uiautomator2 driver. It is intended for educational purposes only.
+Minimal Appium 2 setup for Android automation testing using the uiautomator2 driver.
 
 ## Requirements
 - JDK 17
@@ -10,46 +14,30 @@ This project provides a minimal Appium 2 setup for Android automation testing us
 
 ## Quick Start
 
-1. **Install dependencies:**
+1. Install dependencies:
    ```bash
    npm install
    ```
-
-2. **Set up environment variables:**
+2. Set up environment variables (adjust paths as needed):
    ```bash
    export JAVA_HOME=/path/to/jdk17
    export ANDROID_HOME=/path/to/android/sdk
    export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
    ```
-
-3. **Start Android emulator:**
+3. Start Android emulator:
    ```bash
    npm run avd:start
-   #📱 Available Android Virtual Devices: Medium_Phone_API_36.0
    ```
-
-4. **Start Appium server:**
+4. Start Appium server:
    ```bash
    npm run start-appium
    ```
-
-5. **Run a basic test:**
+5. Run tests:
    ```bash
    npm test
    ```
-   This will open the Android Settings app on your emulator to verify the Appium setup.
 
-## Project Structure
+## Test Results (HTML Report)
 
-```
-appium-autotest/
-├── scripts/
-├── config/
-├── tests/
-├── package.json
-└── README.md
-```
-
-## License
-
-MIT
+- After running tests, open `mochawesome-report/mochawesome.html` in your browser to view the test results.
+- On GitHub Actions, download the `mochawesome-report` artifact from the workflow run and open `mochawesome.html` locally.
