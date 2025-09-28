@@ -7,7 +7,7 @@ on:
     branches: [ '*' ]
 
 jobs:
-  instrumented-tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -39,6 +39,8 @@ jobs:
       - name: Run instrumented tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
+          api-level: 30
           arch: x86_64
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -no-audio
           script: ./gradlew connectedAndroidTest
