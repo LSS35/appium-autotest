@@ -95,6 +95,41 @@ create_default_avd() {
     fi
 }
 
+# Create an ARM64 AVD for Apple Silicon/CI
+create_arm64_avd() {
+    local avd_name="pixel_4_arm64"
+    local package="system-images;android-33;default;arm64-v8a"
+
+    print_status $BLUE "🔨 Creating ARM64 AVD: $avd_name"
+
+    # Check if system image is installed
+    if ! "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --list | grep -q "$package.*Installed"; then
+        print_status $YELLOW "📦 Installing system image: $package"
+        "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$package"
+    fi
+
+    # Create AVD
+    echo "no" | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd \
+        --name "$avd_name" \
+        --package "$package" \
+        --device "pixel_4" \
+        --force
+
+    print_status $GREEN "✅ ARM64 AVD '$avd_name' created successfully"
+
+    # Configure AVD for better performance
+    local avd_config="$HOME/.android/avd/${avd_name}.avd/config.ini"
+    if [ -f "$avd_config" ]; then
+        print_status $BLUE "⚙️  Configuring ARM64 AVD for better performance..."
+        echo "hw.gpu.enabled=yes" >> "$avd_config"
+        echo "hw.gpu.mode=host" >> "$avd_config"
+        echo "hw.ramSize=4096" >> "$avd_config"
+        echo "vm.heapSize=512" >> "$avd_config"
+        echo "hw.keyboard=yes" >> "$avd_config"
+        print_status $GREEN "✅ ARM64 AVD configuration updated"
+    fi
+}
+
 # Start an AVD
 start_avd() {
     local avd_name=$1
@@ -152,6 +187,7 @@ show_help() {
     echo "  list          List available AVDs"
     echo "  images        List installed system images"
     echo "  create        Create default AVD for testing"
+    echo "  create-arm64  Create ARM64 AVD for Apple Silicon/CI"
     echo "  start [name]  Start an AVD (prompts for name if not provided)"
     echo "  stop          Stop all running emulators"
     echo "  help          Show this help message"
@@ -179,6 +215,10 @@ main() {
         "create")
             check_android_sdk
             create_default_avd
+            ;;
+        "create-arm64")
+            check_android_sdk
+            create_arm64_avd
             ;;
         "start")
             check_android_sdk

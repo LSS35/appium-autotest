@@ -77,3 +77,4 @@ local.properties
 .appium/
 appium.log
 *.log
+test-results.xml

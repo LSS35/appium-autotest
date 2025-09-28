@@ -7,6 +7,7 @@
     "verify-setup": "node scripts/verify-setup.js",
     "doctor": "npx appium-doctor",
     "test": "mocha tests/*-test.js --reporter mochawesome",
+    "test:ci": "npx mocha --require tests/hooks.js tests/**/*.js --reporter mochawesome",
     "demo": "node scripts/driver-demo.js",
     "appium": "appium",
     "start-appium": "appium",
