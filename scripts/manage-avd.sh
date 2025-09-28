@@ -137,8 +137,8 @@ create_x86_64_avd() {
 
     print_status $BLUE "🔨 Creating x86_64 AVD: $avd_name"
 
-    # Check if system image is installed
-    if ! "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --list | grep -q "$package.*Installed"; then
+    # Check if system image directory exists (cache-friendly)
+    if [ ! -d "$ANDROID_HOME/system-images/android-33/google_apis/x86_64" ]; then
         print_status $YELLOW "📦 Installing system image: $package"
         yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$package"
     fi

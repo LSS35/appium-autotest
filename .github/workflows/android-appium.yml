@@ -52,15 +52,23 @@ jobs:
 
       - name: Ensure emulator is installed and up to date
         run: |
+          export ANDROID_SDK_ROOT=~/Library/Android/sdk
+          export ANDROID_HOME=~/Library/Android/sdk
           yes | ~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --install "emulator"
         env:
           ANDROID_SDK_ROOT: ~/Library/Android/sdk
+          ANDROID_HOME: ~/Library/Android/sdk
 
-      - name: Check emulator binary exists
+      - name: Verify emulator installation
         run: |
-          if [ ! -f ~/Library/Android/sdk/emulator/emulator ]; then
-            echo "Emulator binary missing!"; exit 1
+          export ANDROID_SDK_ROOT=~/Library/Android/sdk
+          export ANDROID_HOME=~/Library/Android/sdk
+          ls -l ~/Library/Android/sdk/emulator || true
+          ls -l ~/Library/Android/sdk/emulator/lib64/qt || true
+          if [ ! -x ~/Library/Android/sdk/emulator/emulator ]; then
+            echo "Emulator binary missing or not executable!"; exit 1
           fi
+          ~/Library/Android/sdk/emulator/emulator -version || true
 
       - name: Set up Java
         uses: actions/setup-java@v4
