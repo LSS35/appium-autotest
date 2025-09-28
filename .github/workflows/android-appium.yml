@@ -54,8 +54,8 @@ jobs:
         run: |
           export ANDROID_SDK_ROOT=~/Library/Android/sdk
           export ANDROID_HOME=~/Library/Android/sdk
-          yes | sdkmanager --licenses
-          yes | sdkmanager --install \
+          yes | ~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+          yes | ~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --install \
             "platform-tools" \
             "platforms;android-33" \
             "build-tools;33.0.2" \
