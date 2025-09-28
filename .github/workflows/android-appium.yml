@@ -1,4 +1,4 @@
-name: "🤖📱 Android Appium Tests"
+name: "🤖 Android Appium Tests"
 
 on:
   push:
@@ -17,7 +17,6 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
       cancel-in-progress: true
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,6 +28,47 @@ jobs:
           key: ${{ runner.os }}-npm-cache-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-cache-
+
+      # Cache Android system image only (API 33, google_apis, x86_64)
+      - name: Cache Android system image
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Android/sdk/system-images/android-33/google_apis/x86_64
+          key: ${{ runner.os }}-android-system-image-33-google_apis-x86_64
+          restore-keys: |
+            ${{ runner.os }}-android-system-image-33-google_apis-x86_64
+
+      # Cache the rest of the Android SDK (excluding system-images and emulator)
+      - name: Cache Android SDK (core)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Android/sdk/platforms
+            ~/Library/Android/sdk/platform-tools
+            ~/Library/Android/sdk/build-tools
+          key: ${{ runner.os }}-android-sdk-core-v1
+          restore-keys: |
+            ${{ runner.os }}-android-sdk-core-v1
+
+      - name: Install Android SDK components (emulator + tools + system image)
+        run: |
+          export ANDROID_SDK_ROOT=~/Library/Android/sdk
+          export ANDROID_HOME=~/Library/Android/sdk
+          yes | ~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+          yes | ~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-33" \
+            "build-tools;33.0.2" \
+            "emulator" \
+            "system-images;android-33;google_apis;x86_64"
+
+      - name: Verify emulator installation
+        run: |
+          export ANDROID_SDK_ROOT=~/Library/Android/sdk
+          export ANDROID_HOME=~/Library/Android/sdk
+          ls -l ~/Library/Android/sdk/emulator || true
+          ls -l ~/Library/Android/sdk/emulator/lib64/qt || true
+          ~/Library/Android/sdk/emulator/emulator -version || true
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -43,19 +83,15 @@ jobs:
 
       - name: Install Appium and dependencies
         run: |
-          npm install -g appium appium-doctor
+          npm install -g appium
+          npm install -g appium-doctor
           npm ci
 
-      - name: Run Android emulator with Appium tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 30
-          target: google_apis
-          arch: x86_64
-          profile: pixel_4
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
-          script: |
-            echo ">>> Running appium-doctor check"
-            appium-doctor
-            echo ">>> Starting local CI script"
-            ./scripts/run-local-ci.sh
+      - name: Check package-lock.json is in sync with package.json
+        run: |
+          npm install --package-lock-only --ignore-scripts
+          git diff --exit-code package-lock.json || (echo "package-lock.json is not in sync with package.json. Please run 'npm install' and commit the updated lock file." && exit 1)
+
+      - name: Run full local CI-like workflow (AVD, emulator, Appium, tests)
+        run: |
+          ./scripts/run-local-ci.sh
