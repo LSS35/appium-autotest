@@ -30,7 +30,7 @@ jobs:
             ${{ runner.os }}-npm-cache-
 
       # Cache Android ARM64 system image only (API 33, google_apis, arm64-v8a)
-      - name: Cache Android system image
+      - name: Cache Android system image (arm64-v8a)
         uses: actions/cache@v4
         with:
           path: ~/Library/Android/sdk/system-images/android-33/google_apis/arm64-v8a
@@ -50,7 +50,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-android-sdk-core-v1
 
-      - name: Install Android SDK components (emulator + tools + ARM system image)
+      - name: Install Android SDK components (emulator + tools + arm64-v8a system image)
         run: |
           export ANDROID_SDK_ROOT=~/Library/Android/sdk
           export ANDROID_HOME=~/Library/Android/sdk

@@ -11,13 +11,23 @@ print_status() {
   echo -e "${1}${2}${nc}"
 }
 
-# 1. Create ARM64 AVD if needed
-print_status $yellow "[1/5] Creating ARM64 AVD if needed..."
-./scripts/manage-avd.sh create-arm64
+# Detect architecture
+ARCH=$(uname -m)
+if [[ "$ARCH" == "arm64" || "$ARCH" == "aarch64" ]]; then
+  AVD_NAME="pixel_4_arm64"
+  CREATE_CMD="create-arm64"
+else
+  AVD_NAME="pixel_4_x86_64"
+  CREATE_CMD="create-x86_64"
+fi
 
-# 2. Start the ARM64 emulator
-print_status $yellow "[2/5] Starting ARM64 emulator..."
-./scripts/manage-avd.sh start pixel_4_arm64
+# 1. Create AVD if needed
+print_status $yellow "[1/5] Creating $AVD_NAME AVD if needed..."
+./scripts/manage-avd.sh $CREATE_CMD
+
+# 2. Start the emulator
+print_status $yellow "[2/5] Starting $AVD_NAME emulator..."
+./scripts/manage-avd.sh start $AVD_NAME
 
 # Wait for emulator to boot
 print_status $yellow "[2/5] Waiting for emulator to boot..."
