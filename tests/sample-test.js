@@ -12,7 +12,6 @@ describe('Sample Appium Test', function() {
       platformName: 'Android',
       'appium:automationName': 'UiAutomator2',
       'appium:deviceName': 'Android Emulator',
-      'appium:platformVersion': '16.0', // Adjust based on your emulator
       'appium:appPackage': 'com.android.settings',
       'appium:appActivity': '.Settings',
       'appium:newCommandTimeout': 300,
