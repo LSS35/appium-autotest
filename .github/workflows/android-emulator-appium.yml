@@ -29,6 +29,11 @@ jobs:
       - name: Install Android system image
         run: sdkmanager 'system-images;android-30;google_apis;x86_64'
 
+      - name: Build with Gradle
+        uses: vgaidarji/android-github-actions-build@v1.1.2
+        with:
+          args: "assembleDebug"
+
       - name: Start emulator, Appium, and run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
