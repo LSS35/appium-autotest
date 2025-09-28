@@ -17,6 +17,7 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
       cancel-in-progress: true
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -42,10 +43,19 @@ jobs:
 
       - name: Install Appium and dependencies
         run: |
-          npm install -g appium
-          npm install -g appium-doctor
+          npm install -g appium appium-doctor
           npm ci
 
-      - name: Run full local CI-like workflow (AVD, emulator, Appium, tests)
-        run: |
-          ./scripts/run-local-ci.sh
+      - name: Run Android emulator with Appium tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          script: |
+            echo ">>> Running appium-doctor check"
+            appium-doctor
+            echo ">>> Starting local CI script"
+            ./scripts/run-local-ci.sh
