@@ -61,3 +61,6 @@ local.properties
 # Appium specific
 appium.log
 *.log
+.idea
+mochawesome-report
+test-results.xml
